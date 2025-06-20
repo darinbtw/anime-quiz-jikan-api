@@ -98,5 +98,32 @@ def quiz_quiestion():
     }
 
     return render_template('quiz_question.html', quiz=quiz_data)
+
+@app.route('/answer', methods=['POST'])
+def quiz_answer():
+    """Check user answer"""
+    user_answer = request.form.get('answer')
+    correct_answer = session.get('correct_answer')
+    current_anime = session.get('current_anime')
+    
+    # Увеличиваем счетчик вопросов
+    session['total_questions'] = session.get('total_questions', 0) + 1
+    
+    is_correct = user_answer == correct_answer
+    
+    if is_correct:
+        session['score'] = session.get('score', 0) + 1
+    
+    result_data = {
+        'is_correct': is_correct,
+        'user_answer': user_answer,
+        'correct_answer': correct_answer,
+        'anime': current_anime,
+        'score': session.get('score', 0),
+        'total': session.get('total_questions', 0)
+    }
+    
+    return render_template('quiz_result.html', result=result_data)
+
 if __name__ == '__main__':
     app.run(debug=True)

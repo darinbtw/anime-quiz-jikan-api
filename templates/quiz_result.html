@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аниме Квиз - Результат</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .result-correct {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        .result-wrong {
+            background: linear-gradient(45deg, #f44336, #da190b);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        .emoji {
+            font-size: 3em;
+            margin: 10px 0;
+        }
+        .anime-info {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-align: left;
+        }
+        .anime-image {
+            width: 150px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+        .anime-details h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.5em;
+        }
+        .anime-details p {
+            color: #666;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .score-display {
+            background: #4ecdc4;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-continue {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        .btn-restart {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+        .btn-mal {
+            background: linear-gradient(45deg, #2e51a2, #1a365d);
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        .answer-comparison {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f1f3f4;
+            border-radius: 10px;
+        }
+        @media (max-width: 600px) {
+            .anime-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎌 Аниме Квиз</h1>
+        
+        {% if result.is_correct %}
+        <div class="result-correct">
+            <div class="emoji">🎉</div>
+            <h2>Правильно!</h2>
+            <p>Отличная работа, настоящий знаток аниме!</p>
+        </div>
+        {% else %}
+        <div class="result-wrong">
+            <div class="emoji">😅</div>
+            <h2>Неправильно</h2>
+            <p>Ничего страшного, теперь вы знаете еще одно аниме!</p>
+        </div>
+        
+        <div class="answer-comparison">
+            <p><strong>Ваш ответ:</strong> {{ result.user_answer }}</p>
+            <p><strong>Правильный ответ:</strong> {{ result.correct_answer }}</p>
+        </div>
+        {% endif %}
+        
+        <div class="score-display">
+            Счет: {{ result.score }} / {{ result.total }}
+            ({{ "%.1f"|format((result.score / result.total * 100) if result.total > 0 else 0) }}%)
+        </div>
+        
+        <div class="anime-info">
+            <img src="{{ result.anime.image }}" alt="Постер" class="anime-image">
+            <div class="anime-details">
+                <h3>{{ result.anime.title }}</h3>
+                <p><strong>Рейтинг:</strong> {{ result.anime.score if result.anime.score else 'Не оценено' }}</p>
+                <p><strong>Год:</strong> {{ result.anime.year if result.anime.year else 'Неизвестно' }}</p>
+                <p><strong>Описание:</strong> {{ result.anime.synopsis[:200] }}{% if result.anime.synopsis|length > 200 %}...{% endif %}</p>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <a href="/question" class="btn btn-continue">🎮 Следующий вопрос</a>
+            <a href="/" class="btn btn-restart">🔄 Начать заново</a>
+            {% if result.anime.url %}
+            <a href="{{ result.anime.url }}" target="_blank" class="btn btn-mal">📖 Подробнее на MAL</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
