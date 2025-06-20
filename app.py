@@ -74,5 +74,29 @@ def quiz_start():
 
     return render_template('quiz_start.html')
 
+@app.route('/question')
+def quiz_quiestion():
+    '''Generate question'''
+    anime = get_random_anime()
+
+    if not anime:
+        return 'Ошибка получения данных. Попробуйте еще раз.', 500
+    
+    #Generate various answer
+    wrong_answer = generate_wrong_answer()
+    all_answer = wrong_answer + [anime['title']]
+    random.shuffle(all_answer)
+
+    session['correct_answer'] = anime['title']
+    session['current_anime'] = anime
+
+    quiz_data = {
+        'synopsis': anime['synopsis'],
+        'answers': all_answer,
+        'score': session.get('score', 0),
+        'total': session.get('total_questions', 0)
+    }
+
+    return render_template('quiz_question.html', quiz=quiz_data)
 if __name__ == '__main__':
     app.run(debug=True)
