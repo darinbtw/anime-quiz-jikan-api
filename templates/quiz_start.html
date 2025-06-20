@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аниме Квиз</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 500px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        .emoji {
+            font-size: 4em;
+            margin: 20px 0;
+        }
+        .description {
+            color: #666;
+            font-size: 1.2em;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+        .start-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255,107,107,0.3);
+        }
+        .rules {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .rules h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .rules ul {
+            color: #666;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="emoji">🎌</div>
+        <h1>Аниме Квиз</h1>
+        <div class="description">
+            Угадайте название аниме по его описанию!<br>
+            Проверь свои знания аниме культуры.
+        </div>
+        <div class="rules">
+            <h3>📋 Правила:</h3>
+            <ul>
+                <li>Читайте описание аниме</li>
+                <li>Выбирайте правильный ответ из 4 вариантов</li>
+                <li>Набирайте очки за правильные ответы</li>
+                <li>Веселитесь и узнавайте новые аниме!</li>
+            </ul>
+        </div>
+        <a href="/question" class="start-btn">🎮 Начать квиз!</a>
+    </div>
+    
+</body>
+</html>
